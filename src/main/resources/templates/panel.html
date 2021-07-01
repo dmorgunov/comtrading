@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Bet Bot Panel [ UPDATE ]</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css">
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" th:href="@{/css/panel.css}"/>
+</head>
+<body>
+
+<div class="container container-main">
+    <div id="toolbar">
+    </div>
+    <table
+            id="table"
+            class="table-striped"
+            data-toolbar="#toolbar"
+            data-search="false"
+            data-show-refresh="true"
+            data-show-toggle="true"
+            data-show-fullscreen="true"
+            data-show-columns="true"
+            data-show-columns-toggle-all="true"
+            data-detail-view="false"
+            data-filter-control="true"
+            data-show-export="true"
+            data-click-to-select="true"
+            data-minimum-count-columns="2"
+            data-show-pagination-switch="false"
+            data-pagination="true"
+            data-id-field="id"
+            data-page-list="[10, 25, 50, 100]"
+            data-show-footer="false"
+            data-side-pagination="server"
+            data-url="/loadTable">
+        <thead>
+        <tr>
+            <th data-field="feedId">ID</th>
+            <th data-field="sku">SKU</th>
+            <th data-field="name">Название</th>
+            <th data-field="categoryName">Категория</th>
+            <th data-field="parseStatus" data-filter-control="select" data-filter-data="var:filterDefaults">Статус</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+
+<!-- JQuery -->
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+
+<!-- JQuery Plugins -->
+<script type="text/javascript" th:src="@{/js/tabslet.min.js}"></script>
+
+<!-- Bootstrap -->
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- Table -->
+<script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
+<!-- Скрипт обработки форм -->
+<script type="text/javascript" th:src="@{/js/panel.js}"></script>
+</body>
+</html>

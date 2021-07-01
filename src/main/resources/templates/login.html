@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <title>Авторизация</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container h-75">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3>Авторизация</h3>
+                        <div th:if="${param.error}">
+                            <hr>
+                            <h5 class="text-danger">Неверный логи или пароль</h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/login}" method="POST">
+                            <div class="form-group row">
+
+                                <div class="col-md-7 m-auto">
+                                    <label for="username" class="col-form-label text-left">Имя пользователя:</label>
+                                    <input type="text" id="username" class="form-control" name="username" required=""
+                                           autofocus="">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+
+                                <div class="col-md-7 m-auto">
+                                    <label for="password" class="col-form-label text-md-right">Пароль:</label>
+                                    <input type="password" id="password" class="form-control" name="password" required="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 m-auto">
+                                <button type="submit" class="btn btn-primary m-auto p-2 w-100">Войти</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
