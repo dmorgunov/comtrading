@@ -3,11 +3,17 @@ version: '3.1'
 services:
 
   db:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    image: mysql:8.0.25
+    container_name: ekar-test
+    restart: on-failure
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: ekar
+      MYSQL_DATABASE: ekar
+      MYSQL_USER: ekar
+      MYSQL_PASSWORD: ekar
+    ports:
+      - 3306:3306
+
 
   adminer:
     image: adminer

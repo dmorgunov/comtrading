@@ -2,23 +2,28 @@ package freelance.home.comtrading.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import freelance.home.comtrading.domain.aggregation.AggregatorComparingItem;
 import freelance.home.comtrading.domain.item.Item;
 import freelance.home.comtrading.domain.item.TableRecord;
+import freelance.home.comtrading.repository.AggregatorComparingItemRepository;
 import freelance.home.comtrading.service.ItemService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class ContentPanelController {
     private final ItemService itemService;
     private final ObjectMapper mapper = new ObjectMapper();
+    private final AggregatorComparingItemRepository aggregatorComparingItemRepository;
 
-    public ContentPanelController( ItemService itemService) {
+    public ContentPanelController(ItemService itemService,
+                                  AggregatorComparingItemRepository aggregatorComparingItemRepository) {
         this.itemService = itemService;
+        this.aggregatorComparingItemRepository = aggregatorComparingItemRepository;
     }
 
     @CrossOrigin
@@ -60,6 +65,13 @@ public class ContentPanelController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("{}");
         }
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/parser/results/rozetka", method = {RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<AggregatorComparingItem>> rozetkaParserResulrs(Pageable p) {
+        return ResponseEntity.ok(aggregatorComparingItemRepository.findAll(p));
     }
 
 }

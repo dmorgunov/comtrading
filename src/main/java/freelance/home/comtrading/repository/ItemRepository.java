@@ -1,8 +1,11 @@
 package freelance.home.comtrading.repository;
 
+import freelance.home.comtrading.domain.aggregation.Aggregator;
 import freelance.home.comtrading.domain.item.Item;
 import freelance.home.comtrading.domain.item.ParseStatus;
 import freelance.home.comtrading.domain.item.Status;
+import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +16,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Transactional
 @RepositoryRestResource
@@ -52,4 +51,8 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 
     @Query("SELECT i FROM Item i WHERE i.parseStatus IN :status")
     Page<Item> getItemsFilteredByStatus(@Param("status") List<ParseStatus> status, Pageable page);
+
+    @Query(value = "SELECT i FROM Item i WHERE i.id NOT IN " +
+            "(SELECT aci.item.id FROM AggregatorComparingItem aci  WHERE aci.aggregator = :aggregator)")
+    List<Item> getFirstNotProcessedByAggregator(@Param("aggregator") Aggregator aggregator, Pageable p);
 }
