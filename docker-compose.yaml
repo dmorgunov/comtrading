@@ -1,22 +1,48 @@
-version: '3.1'
-
+version: "3.4"
 services:
 
-  db:
-    image: mysql:8.0.25
-    container_name: ekar-test
-    restart: on-failure
+  ####local
+#  db:
+#    image: mysql:8.0.25
+#    container_name: ekar-test
+#    restart: on-failure
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ekar
+#      MYSQL_DATABASE: ekar
+#      MYSQL_USER: ekar
+#      MYSQL_PASSWORD: ekar
+#    ports:
+#      - 3306:3306
+#
+#
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8080:8080
+
+  hub:
+    image: selenium/hub
+    ports:
+      - 4444:4444
     environment:
-      MYSQL_ROOT_PASSWORD: ekar
-      MYSQL_DATABASE: ekar
-      MYSQL_USER: ekar
-      MYSQL_PASSWORD: ekar
-    ports:
-      - 3306:3306
+      GRID_MAX_SESSION: 16
+      GRID_BROWSER_TIMEOUT: 3000
+      GRID_TIMEOUT: 3000
 
-
-  adminer:
-    image: adminer
-    restart: always
+  chrome:
+    image: selenium/node-chrome
+    container_name: web-chrome
+    depends_on:
+      - hub
+    environment:
+      HUB_PORT_4444_TCP_ADDR: hub
+      HUB_PORT_4444_TCP_PORT: 4444
+      NODE_MAX_SESSION: 4
+      NODE_MAX_INSTANCES: 4
+    volumes:
+      - /dev/shm:/dev/shm
     ports:
-      - 8080:8080
+      - 5900:5900
+    links:
+      - hub
